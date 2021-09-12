@@ -1,14 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Blog = require('./models/blog');
+const Blog = require("./models/blog");
+require('dotenv').config()
 
 const app = express();
 
-const psw = process.env.PSW
+const psw = process.env.PSW;
 
 //mondodb atlas connection string
-const dbURI =
-  `mongodb+srv://test_user:${psw}@cluster0.fkxqb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+const dbURI = `mongodb+srv://test_user:${psw}@cluster0.fkxqb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 mongoose
   .connect(dbURI)
@@ -30,21 +30,21 @@ app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
 });
 
-app.get('/add-blog', (req, res) => {
+app.get("/add-blog", (req, res) => {
   const blog = new Blog({
-    title: 'new blog',
-    snippet: 'about my new blog',
-    body: 'more about my new blog'
-  })
+    title: "new blog",
+    snippet: "about my new blog",
+    body: "more about my new blog",
+  });
 
-  blog.save()
-    .then(result => {
+  blog
+    .save()
+    .then((result) => {
       res.send(result);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 });
-
 
 app.listen(3000);
